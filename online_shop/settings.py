@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'accounts.apps.AccountsConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    'products.apps.ProductsConfig',
+    'shop.apps.ShopConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -117,7 +124,18 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# directory that we want to store uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# LOGOUT_REDIRECT_URL = 'login'
+# LOGIN_REDIRECT_URL = 'explore'
+# LOGIN_URL = 'login'
