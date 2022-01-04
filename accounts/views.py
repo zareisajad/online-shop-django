@@ -14,7 +14,7 @@ def user_register(request):
             user = User.objects.create_user(
                 data['email'], data['full_name'], data['password']
             )
-            return redirect('user_login')
+            return redirect('accounts:user_login')
     else:
         form = UserRegistrationForm()
     context = {'form': form}
@@ -31,12 +31,12 @@ def user_login(request):
             )
             if user is not None:
                 login(request, user)
-                return redirect('home_page')
+                return redirect('shop:home_page')
             else:
                 messages.error(
                     request, 'username or password is wrong', 'danger'
                 )
-                return redirect('user_login')
+                return redirect('accounts:user_login')
     else:
         form = UserLoginForm()
     context = {'form': form}
@@ -45,4 +45,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('user_login')
+    return redirect('accounts:user_login')
