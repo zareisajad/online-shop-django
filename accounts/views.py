@@ -2,8 +2,44 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm
 from .models import User
+
+
+def create_manager():
+    """
+    to execute once on startup:
+    this function will call in online_shop/urls.py
+    """
+    if not User.objects.filter(email="manager@example.com").first():
+        user = User.objects.create_user(
+            "manager@example.com", 'shop manager' ,'managerpass1234'
+        )
+        # give this user manager role
+        user.is_manager = True
+        user.save()
+
+
+def manager_login(request):
+    if request.method == 'POST':
+        form = ManagerLoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(
+                request, email=data['email'], password=data['password']
+            )
+            if user is not None and user.is_manager:
+                login(request, user)
+                return redirect('dashboard:products')
+            else:
+                messages.error(
+                    request, 'username or password is wrong', 'danger'
+                )
+                return redirect('accounts:manager_login')
+    else:
+        form = ManagerLoginForm()
+    context = {'form': form}
+    return render(request, 'manager_login.html', context)
 
 
 def user_register(request):
@@ -17,7 +53,7 @@ def user_register(request):
             return redirect('accounts:user_login')
     else:
         form = UserRegistrationForm()
-    context = {'form': form}
+    context = {'title':'Signup', 'form':form}
     return render(request, 'register.html', context)
 
 
@@ -39,7 +75,7 @@ def user_login(request):
                 return redirect('accounts:user_login')
     else:
         form = UserLoginForm()
-    context = {'form': form}
+    context = {'title':'Login', 'form': form}
     return render(request, 'login.html', context)
 
 

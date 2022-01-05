@@ -30,3 +30,16 @@ class UserRegistrationForm(forms.Form):
             attrs={'class': 'form-control', 'placeholder': 'password'}
         )
     )
+
+
+class ManagerLoginForm(forms.Form):
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': 'email'}
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'password'}
+        )
+    )

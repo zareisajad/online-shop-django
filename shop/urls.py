@@ -5,5 +5,6 @@ from shop import views
 app_name = "shop"
 
 urlpatterns = [
-	path('', views.home_page, name='home_page')
+	path('', views.home_page, name='home_page'),
+	path('<slug:slug>/', views.product_detail, name='product_detail'),
 ]
