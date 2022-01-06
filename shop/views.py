@@ -10,4 +10,6 @@ def home_page(request):
 
 
 def product_detail(request, slug):
-	return render(request, 'home_page.html')
+	product = Product.objects.filter(slug=slug).first()
+	context = {'title':product.title, 'product':product}
+	return render(request, 'product_detail.html', context)

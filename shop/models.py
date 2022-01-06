@@ -17,10 +17,10 @@ class Product(models.Model):
     slug = models.SlugField()
 
     def __str__(self):
-        return self.title
-
-    def get_absolut_url(self):
-        return reverse('shop:product_detail', args={'slug':self.slug})
+        return self.slug
+        
+    def get_absolute_url(self):
+        return reverse('shop:product_detail', kwargs={'slug':self.slug})
 
     def save(self, *args, **kwargs): # new
         if not self.slug:
