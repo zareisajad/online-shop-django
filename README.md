@@ -22,12 +22,12 @@ simple online shop website wrriten with django
 
 
 ## Tasks:
-- [ ] user favorite product
+- [x] user favorite product
 - [ ] cart checkout
 - [ ] show product categories in navbar, filter by category
-- [ ] search product
+- [x] search product
 - [ ] pagination
 - [ ] password reset
 - [ ] user profile, edit profile
-- [ ] make login required user views
+- [x] make login required user views
 - [ ] do we need a dashboard beside django default admin?
