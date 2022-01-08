@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row mb-4">
     <div class="col-md-1"></div>
     <!-- product content -->
     <div class="col-md-5 p-3 border rounded">
@@ -11,14 +11,19 @@
         <!-- price -->
         <h4 class="mt-4">Price: {{ product.price }}$</h4>
         <!-- description -->
-        <div class="mt-4 pe-3">{{ product.description }}</div>
+        <div class="mt-4 pe-3 mb-5">{{ product.description }}</div>
         <!-- cart btn -->
         <form method="post" action="{% url 'cart:add_to_cart' product.id %}">
             {% csrf_token %}
-            <br>
             {{ form }}
-            <input type="submit" class="btn btn-primary mt-5" value="Add to cart">
+            <input type="submit" class="btn btn-primary mt-4" value="Add to cart">
         </form>
+        <br>
+        {% if favorites == 'remove' %}
+        <a href="{% url 'shop:remove_from_favorites' product.id %}" class="btn btn-outline-danger mt-5 text-capitalize ">{{favorites}} from favorites</a>
+        {% else %}
+        <a href="{% url 'shop:add_to_favorites' product.id %}" class="btn btn-outline-success mt-5 text-capitalize ">add to {{favorites}}</a>
+        {% endif %}
     </div>
     <!-- product image -->
     <div class="col-md-6">
