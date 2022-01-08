@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import User
+
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(
@@ -43,3 +45,9 @@ class ManagerLoginForm(forms.Form):
             attrs={'class': 'form-control', 'placeholder': 'password'}
         )
     )
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['full_name', 'email']

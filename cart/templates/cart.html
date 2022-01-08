@@ -28,7 +28,9 @@
     </tbody>
     {% endfor %}
 </table>
-<h4 class="border-top pt-2"><span class="text-muted">finall price:</span> ${{ cart.get_total_price }}</h4>
+<hr>
+<a href="{% url 'orders:create_order' %}" style="float: right;" class="btn btn-success mt-1">Checkout</a>
+<h4 class="mt-4"><span class="text-muted">Total:</span> ${{ cart.get_total_price }}</h4>
 </div>
 {% else %}
 <div class="col-md-8 mt-5 pt-5 text-center">

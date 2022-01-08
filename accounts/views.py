@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm, EditProfileForm
 from .models import User
 
 
@@ -82,3 +82,15 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('accounts:user_login')
+
+
+def edit_profile(request):
+    form = EditProfileForm(request.POST, instance=request.user)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Your profile has been updated', 'success')
+        return redirect('accounts:edit_profile')
+    else:
+        form = EditProfileForm(instance=request.user)
+    context = {'title':'Edit Profile', 'form':form}
+    return render(request, 'edit_profile.html', context)
