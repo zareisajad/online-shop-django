@@ -28,6 +28,6 @@ simple online shop website wrriten with django
 - [x] search product
 - [ ] pagination
 - [ ] password reset
-- [ ] user profile, edit profile
+- [x] user profile, edit profile
 - [x] make login required user views
 - [ ] do we need a dashboard beside django default admin?
