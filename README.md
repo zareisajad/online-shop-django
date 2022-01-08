@@ -23,7 +23,7 @@ simple online shop website wrriten with django
 
 ## Tasks:
 - [x] user favorite product
-- [ ] cart checkout
+- [x] cart checkout
 - [ ] show product categories in navbar, filter by category
 - [x] search product
 - [ ] pagination
