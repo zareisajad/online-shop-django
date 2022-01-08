@@ -11,7 +11,7 @@ simple online shop website wrriten with django
 
 ## How To Run it:
 1. clone or download the project.
-2. change directory to ```social-network-django```
+2. change directory to ``` online-shop-django```
 3. make sure you have ``python3``, ```pip``` and ```virtualenv``` installed in your machine.
 4. create virtualenv: ```python3 -m venv venv```
 5. active virtualenv: Mac & Linux os: ```source venv/bin/activate```, Windows os: ```venv\scripts\activate```
