@@ -11,7 +11,7 @@
     <p class="text-muted">${{ product.price }}</p>
     <a href="{{ product.get_absolute_url }}" class="mb-3 btn btn-primary w-100">Buy Now</a>
   </div>
-  <a href="{% url 'shop:remove_from_favorites' product.id %}" class="mb-3 btn btn-outline-danger"><b>Remove</b></a>
+  <a href="{% url 'shop:remove_from_favorites' product.id %}" class="mb-3 btn btn-outline-danger">Remove</a>
 </div>
 {% endfor %}
 {% else %}

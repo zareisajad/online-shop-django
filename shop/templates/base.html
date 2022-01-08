@@ -31,7 +31,23 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
           <li><a href="#" class="nav-link px-2 text-dark">Shop</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">Categories</a></li>
+          <!-- categories dropdown -->
+          <div class="dropdown text-end">
+            <a href="#" class=" mt-2 me-1 ms-1 text-dark d-block link-dark text-decoration-none dropdown-toggle"id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
+              {% for category in categories %}
+              <!-- check if category is parent -->
+                {% if not category.is_sub %}
+                  <!-- parent -->
+                  <li><a href="{% url 'shop:filter_by_category' category.slug %}" class="dropdown-item text-capitalize bg-light border"><b>{{ category }}</b></a></li>
+                  {% for child in category.sub_categories.all %}
+                   <!-- child -->
+                   <li><a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item">{{ child }}</a></li>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
           <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
           <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
         </ul>

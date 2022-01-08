@@ -6,7 +6,7 @@ __pycache__/
 *.jpg
 *.png
 *.webp
-
+*.gif
 # C extensions
 *.so
 .idea/

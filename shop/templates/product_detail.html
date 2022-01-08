@@ -6,10 +6,14 @@
     <div class="col-md-1"></div>
     <!-- product content -->
     <div class="col-md-5 p-3 border rounded">
+        <!-- category -->
+        <div class="border-bottom mb-2 pb-2">
+            <span class="text-muted ">categories:</span><a class="text-decoration-none text-dark" href="{% url 'shop:filter_by_category' product.category.slug %}"> {{product.category}}</a>
+        </div>
         <!-- title -->
         <h2>{{ product.title }}</h2>
         <!-- price -->
-        <h4 class="mt-4">Price: {{ product.price }}$</h4>
+        <h4 class="mt-4 text-dark">Price: {{ product.price }}$</h4>
         <!-- description -->
         <div class="mt-4 pe-3 mb-5">{{ product.description }}</div>
         <!-- cart btn -->
@@ -27,7 +31,7 @@
     </div>
     <!-- product image -->
     <div class="col-md-6">
-        <img style="object-fit: cover;" class="rounded" src="{{ product.image.url }}" width="510" height="500" alt="">
+        <img style="object-fit: cover;" class="rounded" src="{{ product.image.url }}" width="510" height="500">
     </div>
 </div>
 

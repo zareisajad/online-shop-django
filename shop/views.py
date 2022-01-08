@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-from shop.models import Product
+from shop.models import Product, Category
 from cart.forms import QuantityForm
 
 
@@ -16,7 +16,12 @@ def home_page(request):
 def product_detail(request, slug):
 	form = QuantityForm()
 	product = get_object_or_404(Product, slug=slug)
-	context = {'title':product.title, 'product':product, 'form':form, 'favorites':'favorites'}
+	context = {
+		'title':product.title,
+		'product':product,
+		'form':form,
+		'favorites':'favorites'
+	}
 	if request.user.likes.filter(id__in=str(product.id)):
 		context['favorites'] = 'remove'
 	return render(request, 'product_detail.html', context)
@@ -48,4 +53,23 @@ def search(request):
 	print(query)
 	products = Product.objects.filter(title__icontains=query).all()
 	context = {'products': products}
+	return render(request, 'home_page.html', context)
+
+
+def filter_by_category(request, slug):
+	"""when user clicks on parent category
+	we want to show all products in its sub-categories too
+	"""
+	result = []
+	category = Category.objects.filter(slug=slug).first()
+	[result.append(product) \
+		for product in Product.objects.filter(category=category.id).all()]
+	# check if category is parent then get all sub-categories
+	if not category.is_sub:
+		sub_categories = category.sub_categories.all()
+		# get all sub-categories products 
+		for category in sub_categories:
+			[result.append(product) \
+				for product in Product.objects.filter(category=category).all()]
+	context = {'products': result}
 	return render(request, 'home_page.html', context)
