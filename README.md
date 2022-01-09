@@ -19,15 +19,3 @@ simple online shop website wrriten with django
 7. databse migrate: ```python manage.py migrate```
 8. run the server: ```python manage.py runserver```
 9. you should be able to open this address now: http://127.0.0.1:8000/
-
-
-## Tasks:
-- [x] user favorite product
-- [x] cart checkout
-- [x] show product categories in navbar, filter by category
-- [x] search product
-- [ ] pagination
-- [ ] password reset
-- [x] user profile, edit profile
-- [x] make login required user views
-- [ ] fron and manage oreders, products
