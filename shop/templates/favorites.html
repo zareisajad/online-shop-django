@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if products %}
-{% for product in products %}
 <h2>Your Favorites</h2>
 <hr>
+{% for product in products %}
 <div class="card me-2 mb-2" style="width: 16rem;">
   <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ product.image.url }}">
   <div class="mt-3 text-center">
