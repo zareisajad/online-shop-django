@@ -10,10 +10,15 @@
             <div class="form-group">
                 <button class="btn btn-primary mt-3 w-100" type="submit">Submit</button>
             </div>
+            <div class="mt-2 mb-2">
+                <small class="">
+                    <a class="text-decoration-none text-danger" href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+                </small>
+            </div>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                New Here? <a href="{% url 'accounts:user_register' %}">Create account</a>
+                New Here? <a class="text-decoration-none" href="{% url 'accounts:user_register' %}">Create account</a>
             </small>
         </div>
     </div>

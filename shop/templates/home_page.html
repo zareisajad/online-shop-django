@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if products %}
 {% for product in products.object_list %}
 <div class="card me-2 mb-2" style="width: 16rem;">
     <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ product.image.url }}">
@@ -27,5 +28,15 @@
     </ul>
   </div>
 </center>
-
+{% else %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 mt-5 pt-5 text-center">
+    <br>
+    <h3 class="text-muted text-capitalize">No Products..!</h3>
+    <a href="/" class="text-primary text-decoration-none">Back</a>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endif %}
 {% endblock %}
