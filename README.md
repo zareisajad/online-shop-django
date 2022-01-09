@@ -1,4 +1,6 @@
-# online-shop-django
+# Django Online Shop
+![Screenshot 2022-01-09 at 16-57-27 Django Online Shop](https://user-images.githubusercontent.com/71011395/148684345-3196fc3d-4abd-4f6c-ac7b-3760defea62c.png)
+
 simple online shop website wrriten with django
 
 
