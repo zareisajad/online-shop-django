@@ -8,7 +8,7 @@ from .models import Order, OrderItem
 from cart.utils.cart import Cart
 
 
-@login_required()
+@login_required
 def create_order(request):
     cart = Cart(request)
     order = Order.objects.create(user=request.user)
@@ -20,14 +20,14 @@ def create_order(request):
     return redirect('orders:pay_order', order_id=order.id)
 
 
-@login_required()
-def order_detail(request, order_id):
+@login_required
+def checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id)
-    context = {'title':'Order Detail' ,'order':order}
-    return render(request, 'order_detail.html', context)
+    context = {'title':'Checkout' ,'order':order}
+    return render(request, 'checkout.html', context)
 
 
-@login_required()
+@login_required
 def fake_payment(request, order_id):
     cart = Cart(request)
     cart.clear()
@@ -37,6 +37,7 @@ def fake_payment(request, order_id):
     return redirect('orders:user_orders')
 
 
+@login_required
 def user_orders(request):
     orders = request.user.orders.all()
     context = {'title':'Orders', 'orders': orders}

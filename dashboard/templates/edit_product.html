@@ -1,7 +1,7 @@
 {% extends "dashboard.html" %}
 {% block content %}
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST">
     {% csrf_token %}
     {{ form }}
     <div class="form-group">

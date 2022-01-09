@@ -1,0 +1,18 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+{% if order.status %}
+    <h4><b class="text-success">Successful</b></h4>
+{% else %}
+    <h3><b class="text-danger">Cancelled</b></h3>
+{% endif %}
+{% for item in items  %}
+<div class="bg-light rounded border-bottom p-3">
+    <p>product:<a class="text-decoration-none" href="{{ item.product.get_absolute_url }}"> {{item.product.title}}</a></p>
+    <p>Price: ${{item.price}}</p>
+    <p>quantity: {{item.quantity}}</p>
+</div>
+{% endfor %}
+<h4 class="border-top pt-2 text-muted">Total: ${{ order.get_total_price }}</h4>
+
+{% endblock %}

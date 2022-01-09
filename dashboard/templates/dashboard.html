@@ -1,86 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Dashboard | {{title}}</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="../../static/dashboard/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="h2 ps-3 text-primary text-decoration-none" href="">Dashboard</a> 
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-            <!-- Navbar-->
-            <div class="nav">
-                <a class="me-3 btn btn-danger" href="{% url 'accounts:user_logout' %}">Log Out</a>
-            </div>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <i class="ms-3"><a class="text-decoration-none text-muted" href="{% url 'shop:home_page' %}"><< Back to shop</a></i>    
-                        <div class="nav mt-3">
-                            <a class="nav-link" href="{% url 'dashboard:add_product' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Add product
-                            </a>
-                            <a class="nav-link" href="{% url 'dashboard:products' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Products
-                            </a>
-                            <a class="nav-link" href="">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Orders
-                            </a>
-                            <a class="nav-link" href="">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Users
-                            </a>
-                            <a class="nav-link" href="">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Add Manager
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer"><div class="small">You Logged in as:</div>{{ request.user.email }}</div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                <div class="">
-                    <div class="row">
-                        <div class="col-md-12 p-5">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </div>
-                </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; sajadzarei 2021</div>
-                        </div>
-                    </div>
-                </footer>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="row mt-5">
+        <div class="col-md-1"></div>
+        <!-- content -->
+        <div class="col-md-7">
+            <h2 class="border-bottom text-capitalize">{{ title }}</h2>
+            <div class="p-4">
+                <!-- messages -->
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="../../shop/static/dashboard/scripts.js"></script>
-        <script src="../../shop/static/dashboard/datatables-simple-demo.js"></script>
-    </body>
+        <!-- sidebar -->
+        <div class="col-md-3 border-start">
+            <h3 class="text-muted">Menu</h3>
+            <a class="text-decoration-none" href="{% url 'dashboard:products' %}">
+                <li class="rounded list-group-item  text-primary">Products</li>
+            </a>
+            <a class="text-decoration-none" href="{% url 'dashboard:add_product' %}">
+                <li class="rounded list-group-item mt-2 text-primary">Add New Product</li>
+            </a>
+            <a class="text-decoration-none" href="{% url 'dashboard:add_category' %}">
+                <li class="rounded list-group-item mt-2  text-primary">Add New Category</li>
+            </a>
+            <a class="text-decoration-none" href="{% url 'dashboard:orders' %}">
+                <li class="rounded list-group-item mt-2  text-primary">Orders</li>
+            </a>
+            <hr>
+            <a class="text-decoration-none" href="{% url 'shop:home_page' %}">
+                <li class="rounded list-group-item bg-primary mt-2  text-white">Back To shop</li>
+            </a>
+            <a class="text-decoration-none" href="{% url 'accounts:user_logout' %}">
+                <li class="rounded list-group-item bg-danger mt-2  text-white">Logout</li>
+            </a>
+            <div class="text-muted mt-2">You logged in as: {{ request.user.email }}</div>
+        </div>
+        <div class="col-md-1 "></div>
+    </div>
+</body>
 </html>
