@@ -34,6 +34,7 @@ def add_product(request):
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Product added Successfuly!')
             return redirect('dashboard:add_product')
     else:
         form = AddProductForm()
