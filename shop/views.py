@@ -1,15 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from django.core.paginator import Paginator
 
 from shop.models import Product, Category
 from cart.forms import QuantityForm
 
 
+def paginat(request, list_objects):
+	p = Paginator(list_objects, 20)
+	page_number = request.GET.get('page')
+	try:
+		page_obj = p.get_page(page_number)
+	except PageNotAnInteger:
+		page_obj = p.page(1)
+	except EmptyPage:
+		page_obj = p.page(p.num_pages)
+	return page_obj
+
+
 def home_page(request):
 	products = Product.objects.all()
-	context = {'products':products}
+	context = {'products': paginat(request ,products)}
 	return render(request, 'home_page.html', context)
 
 
@@ -52,9 +64,8 @@ def favorites(request):
 
 def search(request):
 	query = request.GET.get('q')
-	print(query)
 	products = Product.objects.filter(title__icontains=query).all()
-	context = {'products': products}
+	context = {'products': paginat(request ,products)}
 	return render(request, 'home_page.html', context)
 
 
@@ -73,5 +84,5 @@ def filter_by_category(request, slug):
 		for category in sub_categories:
 			[result.append(product) \
 				for product in Product.objects.filter(category=category).all()]
-	context = {'products': result}
+	context = {'products': paginat(request ,result)}
 	return render(request, 'home_page.html', context)
