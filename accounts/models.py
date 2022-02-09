@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from .managers import UserManager
 from shop.models import Product
 
+
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=100, unique=True)
     full_name = models.CharField(max_length=100)    
