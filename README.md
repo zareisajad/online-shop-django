@@ -15,7 +15,7 @@ available to the user:
 - favorites
 - reset password using email
 
-manager can access all this features  
+manager can access all these features  
 in the custom dashboard in this address: http://127.0.0.1:8000/accounts/login/manager  
 email: manager@example.com  
 password: managerpass1234  
