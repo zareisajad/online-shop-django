@@ -59,7 +59,7 @@ To access the custom dashboard for managers, please use the following credential
 
 ## How to Contribute
 
-I welcome contributions to enhance and customize this Pinterest clone. If you would like to contribute, please follow these steps:
+I welcome contributions to enhance and customize this project. If you would like to contribute, please follow these steps:
 
 1. Fork the repository on GitHub.
 2. Create a new branch with a descriptive name for your feature or bug fix.
@@ -70,9 +70,9 @@ I welcome contributions to enhance and customize this Pinterest clone. If you wo
 
 ## License
 
-This Pinterest clone is released under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the terms of the license.
+released under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the terms of the license.
 
-Feel free to explore, contribute, and customize this Pinterest clone according to your needs!
+Feel free to explore, contribute, and customize this according to your needs!
 
 
 ## App Preview
