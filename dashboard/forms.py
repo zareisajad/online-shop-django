@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from shop.models import Product, Category
+from shop.models import Product, Category, Voucher
 
 
 class AddProductForm(ModelForm):
@@ -37,3 +37,12 @@ class EditProductForm(ModelForm):
         super(EditProductForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+
+class AddVoucherForm(ModelForm):
+    class Meta:
+        model = Voucher
+        fields = ['voucher_code']
+    
+
+    def __init__(self, *args, **kwargs):
+        super(AddVoucherForm, self).__init__(*args, **kwargs)

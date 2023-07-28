@@ -44,3 +44,16 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+    
+class Voucher(models.Model):
+    voucher_code = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.voucher_code
+
+    def get_absolute_url(self):
+        return reverse('shop:product_detail', kwargs={'slug':self.slug})
+
+    def save(self, *args, **kwargs): # new
+        self.slug = slugify(self.voucher_code)
+        return super().save(*args, **kwargs)
