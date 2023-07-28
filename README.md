@@ -1,10 +1,10 @@
-# Simple Online Shop: Manage Products and Orders with Django
-![Screenshot 2022-01-09 at 17-04-55 Django Online Shop](https://user-images.githubusercontent.com/71011395/148684469-79bfdb07-efa0-4dde-ad76-1f3277f833e6.png)
+# xsocks
 
+## Problem
 
-This project is a simple but usable online shop written with Django. The app provides a custom dashboard to manage products and orders. Users can like a product, add it to the cart, and proceed to checkout. Order processing is supported, but the payment is handled using a fake pay system.
+In an effort to attract new clients, Xebia Socks & Co wants to introduce a new voucher system. Vouchers can only be used once. We are planning on sending out vouchers for free shipping. In the future, there will be different marketing campaigns that make use of (different) vouchers.
 
-[Preview](#app-preview)
+Create a small PoC to demonstrate how this voucher system can be built.
 
 ## Features
 
@@ -57,23 +57,6 @@ To access the custom dashboard for managers, please use the following credential
 - Email: manager@example.com
 - Password: managerpass1234
 
-## How to Contribute
-
-I welcome contributions to enhance and customize this project. If you would like to contribute, please follow these steps:
-
-1. Fork the repository on GitHub.
-2. Create a new branch with a descriptive name for your feature or bug fix.
-3. Make the necessary changes in your branch.
-4. Test your changes thoroughly.
-5. Commit your changes and push them to your forked repository.
-6. Submit a pull request, clearly describing the changes you have made.
-
 ## License
 
 released under the [MIT License](LICENSE). Feel free to use, modify, and distribute it as per the terms of the license.
-
-Feel free to explore, contribute, and customize this according to your needs!
-
-
-## App Preview
-![Peek 2022-01-09 19-15](https://user-images.githubusercontent.com/71011395/148689722-6ceacc8f-81b7-48e0-a258-9d4e543d1e7c.gif)

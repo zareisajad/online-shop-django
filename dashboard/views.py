@@ -7,7 +7,7 @@ from django.http import Http404
 from shop.models import Product
 from accounts.models import User
 from orders.models import Order, OrderItem
-from .forms import AddProductForm, AddCategoryForm, EditProductForm
+from .forms import AddProductForm, AddCategoryForm, EditProductForm, AddVoucherForm
 
 
 def is_manager(user):
@@ -96,3 +96,17 @@ def order_detail(request, id):
     items = OrderItem.objects.filter(order=order).all()
     context = {'title':'order detail', 'items':items, 'order':order}
     return render(request, 'order_detail.html', context)
+
+@user_passes_test(is_manager)
+@login_required
+def add_voucher(request):
+    if request.method == 'POST':
+        form = AddVoucherForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Voucher added Successfuly!')
+            return redirect('dashboard:add_voucher')
+    else:
+        form = AddVoucherForm()
+    context = {'title':'Add Voucher', 'form':form}
+    return render(request, 'add_voucher.html', context)

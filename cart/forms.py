@@ -7,3 +7,10 @@ class QuantityForm(forms.Form):
             attrs={'class': 'form-control mt-1','placeholder': 'quantity'}
         )
     )
+
+#class VoucherForm(forms.Form):
+#    voucher = forms.TextInput(label='',
+#        widget=forms.TextInput(
+#            attrs={'class': 'form-control mt-1','placeholder': 'voucher code'}
+#        )
+#    )
