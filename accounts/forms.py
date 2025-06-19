@@ -17,19 +17,34 @@ class UserLoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.Form):
-    email = forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={'class': 'form-control', 'placeholder': 'email'}
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'First name'}
         )
     )
-    full_name = forms.CharField(
+    last_name = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'full name'}
+            attrs={'class': 'form-control', 'placeholder': 'Last name'}
+        )
+    )
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Username'}
+    )
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': 'Email'}
         )
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'password'}
+            attrs={'class': 'form-control', 'placeholder': 'Password'}
+        )
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}
         )
     )
 
@@ -37,12 +52,12 @@ class UserRegistrationForm(forms.Form):
 class ManagerLoginForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(
-            attrs={'class': 'form-control', 'placeholder': 'email'}
+            attrs={'class': 'form-control', 'placeholder': 'Email'}
         )
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'password'}
+            attrs={'class': 'form-control', 'placeholder': 'Password'}
         )
     )
 
