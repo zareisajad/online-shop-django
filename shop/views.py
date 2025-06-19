@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from shop.models import Product, Category
 from cart.forms import QuantityForm
@@ -80,7 +80,7 @@ def filter_by_category(request, slug):
 	# check if category is parent then get all sub-categories
 	if not category.is_sub:
 		sub_categories = category.sub_categories.all()
-		# get all sub-categories products 
+		# get all sub-categories products
 		for category in sub_categories:
 			[result.append(product) \
 				for product in Product.objects.filter(category=category).all()]

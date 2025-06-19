@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
-from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm, EditProfileForm
-from accounts.models import User
+from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm, UserProfileForm
+from accounts.models import User, UserProfile
 
 
 def create_manager():
@@ -84,13 +85,14 @@ def user_logout(request):
     return redirect('accounts:user_login')
 
 
+@login_required
 def edit_profile(request):
-    form = EditProfileForm(request.POST, instance=request.user)
+    form = UserProfileForm(request.POST, instance=request.user.userprofile)
     if form.is_valid():
         form.save()
         messages.success(request, 'Your profile has been updated', 'success')
         return redirect('accounts:edit_profile')
     else:
-        form = EditProfileForm(instance=request.user)
+        form = UserProfileForm(instance=request.user.userprofile)
     context = {'title':'Edit Profile', 'form':form}
     return render(request, 'edit_profile.html', context)

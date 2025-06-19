@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import User
+from .models import User, UserProfile
 
 
 class UserLoginForm(forms.Form):
@@ -46,8 +46,15 @@ class ManagerLoginForm(forms.Form):
         )
     )
 
-
-class EditProfileForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['full_name', 'email']
+        model = UserProfile
+        fields = ['profile_picture', 'birth_date', 'address', 'bio', 'location', 'website']
+        widgets = {
+            'profile_picture': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'website': forms.URLInput(attrs={'class': 'form-control'}),
+        }

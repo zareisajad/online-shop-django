@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+migration/
 
 *.jpg
 *.png
@@ -131,3 +132,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
