@@ -1,6 +1,10 @@
-asgiref==3.4.1
-backports.zoneinfo==0.2.1
-Django==4.0
-django-crispy-forms==1.13.0
-Pillow==9.0.0
-sqlparse==0.4.2
+asgiref==3.8.1
+Django==5.2.3
+numpy==2.3.0
+pandas==2.3.0
+pillow==11.2.1
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+sqlparse==0.5.3
+tzdata==2025.2
