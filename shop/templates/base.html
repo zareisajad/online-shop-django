@@ -6,11 +6,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Django Online Shop">
+  <meta name="keywords" content="Django, Online Shop, E-commerce">
+
+  <link rel="icon" href="{% static 'images/favicon.webp' %}" type="image/x-icon">
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <!-- bootstrap css cdn -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
   <title>{% if title %} {{ title }} {% else %} Django Online Shop {% endif %}</title>
 </head>
 
@@ -18,6 +22,10 @@
   <header class="p-2 border-bottom ">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <!-- logo -->
+        <a href="{% url 'shop:home_page' %}" class="brand d-flex align-items-center me-2 mb-2 mb-lg-0 text-dark text-decoration-none">
+          <img src="{% static 'images/logo.png' %}" alt="Logo" width="100" height="40">
+        </a>
         <!-- Menu -->
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
@@ -45,7 +53,8 @@
           <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
         </ul>
         <!-- search form -->
-        <form class="col-12 d-flex gap-2 col-lg-auto mb-3 mb-lg-0 me-lg-3 align-self-center" action="{% url 'shop:search' %}">
+        <form class="col-12 d-flex gap-2 col-lg-auto mb-3 mb-lg-0 me-lg-3 align-self-center"
+          action="{% url 'shop:search' %}">
           <input name="q" type="search" class="form-control form-control-dark mr-2" placeholder="Search..."
             aria-label="Search">
           <button type="submit" class="btn btn-outline-primary">Search</button>
@@ -98,9 +107,7 @@
     </div>
   </main>
   <!-- Bootstrap JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-    crossorigin="anonymous"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </body>
 

@@ -114,8 +114,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATIC_ROOT = path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    path.join(BASE_DIR, 'online_shop/static'),
+]
 
 # directory that we want to store uploaded files
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
