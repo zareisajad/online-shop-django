@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="col-md-6">
-        <form method="POST">
+    <div class="col-md-6 justify-content-center mx-auto mt-5 pt-5">
+        <form method="POST" action="{% url 'accounts:user_register' %}">
             {% csrf_token %}
             <h3>Create Account</h3>
             <hr>

@@ -19,79 +19,84 @@
 </head>
 
 <body>
-  <header class="p-2 border-bottom ">
+  <header class="p-2 border-bottom">
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white p-0">
         <!-- logo -->
-        <a href="{% url 'shop:home_page' %}" class="brand d-flex align-items-center me-2 mb-2 mb-lg-0 text-dark text-decoration-none">
-          <img src="{% static 'images/logo.png' %}" alt="Logo" width="100" height="40">
+        <a href="{% url 'shop:home_page' %}" class="navbar-brand d-flex align-items-center me-2 mb-2 mb-lg-0 text-dark text-decoration-none">
+          <img src="{% static 'images/logo.png' %}" alt="Logo" height="70" width="200">
         </a>
-        <!-- Menu -->
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">Shop</a></li>
-          <!-- categories dropdown -->
-          <div class="dropdown text-end">
-            <a href="#" class=" mt-2 me-1 ms-1 text-dark d-block link-dark text-decoration-none dropdown-toggle"
-              id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+        <!-- Navbar toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <!-- Menu -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Shop</a></li>
+            <!-- categories dropdown -->
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle text-dark" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                {% for category in categories %}
+                  {% if not category.is_sub %}
+                    <li>
+                      <a href="{% url 'shop:filter_by_category' category.slug %}" class="dropdown-item text-capitalize bg-light border"><b>{{ category }}</b></a>
+                    </li>
+                    {% for child in category.sub_categories.all %}
+                      <li>
+                        <a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item">{{ child }}</a>
+                      </li>
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">About</a></li>
+          </ul>
+          <!-- search form -->
+          <form class="d-flex gap-2 mb-2 mb-lg-0 me-lg-3 align-self-center" action="{% url 'shop:search' %}">
+            <input name="q" type="search" class="form-control form-control-dark mr-2" placeholder="Search..." aria-label="Search">
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+          </form>
+          {% if request.user.is_authenticated %}
+          <!-- user profile dropdown -->
+          <div class="dropdown text-end ms-lg-2">
+            <a href="#" class="btn btn-primary text-white me-4 d-block link-dark text-decoration-none dropdown-toggle"
+              id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
-              {% for category in categories %}
-              <!-- check if category is parent -->
-              {% if not category.is_sub %}
-              <!-- parent -->
-              <li><a href="{% url 'shop:filter_by_category' category.slug %}"
-                  class="dropdown-item text-capitalize bg-light border"><b>{{ category }}</b></a></li>
-              {% for child in category.sub_categories.all %}
-              <!-- child -->
-              <li><a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item">{{ child }}</a></li>
-              {% endfor %}
-              {% endif %}
-              {% endfor %}
+              <li><a href="{% url 'cart:show_cart' %}" class="dropdown-item">Cart</a></li>
+              <li><a href="{% url 'shop:favorites' %}" class="dropdown-item">Favorites</a></li>
+              <li><a href="{% url 'orders:user_orders' %}" class="dropdown-item">Orders</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'accounts:user_logout' %}">Sign out</a></li>
             </ul>
           </div>
-          <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
-        </ul>
-        <!-- search form -->
-        <form class="col-12 d-flex gap-2 col-lg-auto mb-3 mb-lg-0 me-lg-3 align-self-center"
-          action="{% url 'shop:search' %}">
-          <input name="q" type="search" class="form-control form-control-dark mr-2" placeholder="Search..."
-            aria-label="Search">
-          <button type="submit" class="btn btn-outline-primary">Search</button>
-        </form>
-        {% if request.user.is_authenticated %}
-        <!-- user profile dropdown -->
-        <div class="dropdown text-end">
-          <a href="#" class="btn btn-primary text-white me-4 d-block link-dark text-decoration-none dropdown-toggle"
-            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
-            <li><a href="{% url 'cart:show_cart' %}" <a class="dropdown-item">Cart</a></li>
-            <li><a href="{% url 'shop:favorites' %}" <a class="dropdown-item">Favorites</a></li>
-            <li><a href="{% url 'orders:user_orders' %}" <a class="dropdown-item">Orders</a></li>
-            <li><a class="dropdown-item" href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
-            <li><a class="dropdown-item text-danger" href="{% url 'accounts:user_logout' %}">Sign out</a></li>
-          </ul>
+          <!-- cart icon -->
+          <span class="d-flex align-items-center ms-2">
+            {% if user.is_authenticated %}
+              <b class="text-primary">{{ cart_count }}</b>
+            {% endif %}
+            <a href="{% url 'cart:show_cart' %}" class="text-primary mt-2 me-2"><i class="material-icons h3">&#xe8cc;</i></a>
+            {% if user.is_authenticated %}
+              <b class="text-primary">{{ request.user.get_likes_count }}</b>
+            {% endif %}
+            <a href="{% url 'shop:favorites' %}" class="text-primary mt-2 me-2"><i class="material-icons h3">&#xe87d;</i></a>
+          </span>
+          {% else %}
+          <!-- login, sign-up btn -->
+          <div class="text-end display-flex flex-lg-row align-items-center ms-lg-2">
+            <a href="{% url 'accounts:user_login' %}" class="btn btn-outline-primary me-2">Login</a>
+            <a href="{% url 'accounts:user_register' %}" class="btn btn-primary">Sign-up</a>
+          </div>
+          {% endif %}
         </div>
-        <!-- cart icon -->
-        {% if user.is_authenticated %}
-        <b class="text-primary">{{ cart_count }}</b>
-        {% endif %}
-        <a href="{% url 'cart:show_cart' %}" class="text-primary mt-2 me-2"><i
-            class="material-icons h3">&#xe8cc;</i></a>
-        <!-- favorite icon -->
-        {% if user.is_authenticated %}
-        <b class="text-primary">{{ request.user.get_likes_count}}</b>
-        {% endif %}
-        <a href="{% url 'shop:favorites' %}" class="text-primary mt-2 me-2"><i
-            class="material-icons h3">&#xe87d;</i></a>
-        {% else %}
-        <!-- login, sign-up btn -->
-        <div class="text-end display-flex flex-lg-row align-items-center">
-          <a href="{% url 'accounts:user_login' %}" class="btn btn-outline-primary me-2">Login</a>
-          <a href="{% url 'accounts:user_register' %}" class="btn btn-primary">Sign-up</a>
-        </div>
-        {% endif %}
-      </div>
+      </nav>
     </div>
   </header>
   <main class="container">
