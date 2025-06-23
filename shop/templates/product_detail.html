@@ -22,6 +22,7 @@
             {{ form }}
             <input type="submit" class="btn btn-primary mt-4" value="Add to cart">
         </form>
+        <a href="{% url 'shop:add_to_wishlist' product.id %}" class="btn btn-outline-warning mt-2 w-100">Add to Wishlist</a>
         <br>
         {% if favorites == 'remove' %}
         <a href="{% url 'shop:remove_from_favorites' product.id %}" class="btn btn-outline-danger mt-5 text-capitalize ">{{favorites}} from favorites</a>

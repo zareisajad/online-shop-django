@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from shop.models import Product, Category
+from models import WishList
 from cart.forms import QuantityForm
 
 
@@ -86,3 +87,15 @@ def filter_by_category(request, slug):
 				for product in Product.objects.filter(category=category).all()]
 	context = {'products': paginat(request ,result)}
 	return render(request, 'home_page.html', context)
+
+@login_required
+def add_to_wish_list(request, product_id):
+    """
+    Add a product to the user's wish list.
+    """
+    if request.method == 'POST':
+        product = product.objects.get(id=product_id)
+        WishList.objects.get_or_create(user=request.user, product=product)
+        return redirect('wish_list')  # Redirect to the wish list view
+    else:
+        return render(request, 'wishList:add_to_wish_list', {'product_id': product_id})

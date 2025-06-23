@@ -51,7 +51,7 @@ def user_register(request):
             user = User.objects.create_user(
                 data['first_name'],data['last_name'], data['email'], data['username'],data['confirm_password'], data['password']
             )
-            return redirect('accounts:user_login')
+            return redirect('shop:home_page')
     else:
         form = UserRegistrationForm()
     context = {'title':'Signup', 'form':form}

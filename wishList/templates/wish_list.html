@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Wish List</h1>
+{% if wish_list %}
+    <ul>
+        {% for item in wish_list %}
+            <li>
+                <strong>{{ item.name }}</strong> - {{ item.description }}
+                <form method="post" action="{% url 'remove_from_wish_list' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Your wish list is empty.</p>
+{% endif %}
+{% endblock %}
