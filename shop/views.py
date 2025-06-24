@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from shop.models import Product, Category
-from models import WishList
+from wishList.models import WishList
+from .models import Product, Category
 from cart.forms import QuantityForm
 
 
