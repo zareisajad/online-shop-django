@@ -1,0 +1,13 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <div class="form-group">
+        <button class="btn btn-primary mt-3 w-100" type="submit">ثبت</button>
+    </div>
+</form>
+
+{% endblock %}
+

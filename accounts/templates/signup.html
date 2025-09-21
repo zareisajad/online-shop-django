@@ -1,0 +1,136 @@
+{%load static%}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.rtl.min.css" integrity="sha384-DOXMLfHhQkvFFp+rWTZwVlPVqdIhpDVYT9csOnHSgWQWPX0v5MCGtjCJbY6ERspU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>ورود | ثبت‌نام</title>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card border-0 shadow-sm rounded-4 p-3">
+            <div class="card-body">
+              <!-- لوگو -->
+              <div class="text-center mb-4">
+                <a href="index.html">
+                  <img src="pic/logo.png" alt="لوگو فروشگاه" class="img-fluid" style="max-height: 60px;">
+                </a>
+              </div>
+              
+              <!-- عنوان -->
+              <h5 class="text-center mb-4">ثبت‌نام</h5>
+              
+              <!-- پیام خوش‌آمدگویی -->
+              <p class="text-center text-muted mb-4">سلام!</p>
+              <p class="text-center mb-4">لطفا شماره موبایل یا ایمیل خود را وارد کنید</p>
+              
+              <!-- فرم ورود -->
+              <form id="loginForm" method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-phone"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0" 
+                    id="phoneNumber" placeholder="0912"
+                     dir="ltr" autocomplete="off" name="phone_number">
+                  </div>
+                  <div class="invalid-feedback" id="phoneError">
+                    لطفا شماره موبایل خود را وارد کنید
+                  </div>
+                </div>
+                
+                <!-- دکمه ورود -->
+                <div class="d-grid gap-2 mb-3">
+                  <button type="submit" class="btn btn-primary py-2 rounded-3">ثبت نام</button>
+                </div>
+                
+                <!-- متن قوانین -->
+                <p class="text-center small text-muted">
+                  ورود شما به معنای پذیرش 
+                  <a href="#" class="text-decoration-none">شرایط فروشگاه</a> 
+                  و 
+                  <a href="#" class="text-decoration-none">قوانین حریم‌خصوصی</a> 
+                  است
+                </p>
+                <!-- پیوند ورود -->
+                <p class="text-center small text-muted">
+                  حساب کاربری دارید؟
+                  <a href="{% url 'accounts:user_login' %}" class="text-decoration-none">ورود</a>
+                <input type="hidden" name="country_code" value="+98">
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        function toEnglishDigits(s) {
+          const fa = '۰۱۲۳۴۵۶۷۸۹';
+          const ar = '٠١٢٣٤٥٦٧٨٩';
+          return s.replace(/[۰-۹]/g, d => fa.indexOf(d))
+                  .replace(/[٠-٩]/g, d => ar.indexOf(d));
+        }
+
+        function normalizeIrMobile(raw) {
+          let v = toEnglishDigits(raw).replace(/[^\d]/g, '');
+          if (v.startsWith('98')) {
+            v = v.slice(2);
+          }
+          if (v.startsWith('0')) {
+            v = v.slice(1);
+          }
+          // Expect 10 digits starting with 9, e.g., 9xxxxxxxxx
+          return v;
+        }
+
+        $('#phoneNumber').on('input blur', function() {
+          const normalized = normalizeIrMobile($(this).val());
+          // Only replace if user had an Iranian-style format to avoid surprising behavior
+          if (normalized && (normalized.length <= 10)) {
+            $(this).val(normalized);
+          }
+          $(this).removeClass('is-invalid');
+          $('#phoneError').hide();
+        });
+
+        $('#loginForm').on('submit', function(e) {
+          e.preventDefault();
+
+          const raw = $('#phoneNumber').val().trim();
+          const normalized = normalizeIrMobile(raw);
+
+          // Front validation: must be 10 digits starting with 9
+          if (!/^(9\d{9})$/.test(normalized)) {
+            $('#phoneNumber').addClass('is-invalid');
+            $('#phoneError').text('لطفا شماره موبایل معتبر 10 رقمی وارد کنید').show();
+            return false;
+          }
+
+          // Ensure input contains 10-digit local part without leading 0.
+          $('#phoneNumber').val(normalized);
+
+          this.submit();
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- بخش میانی با جستجو -->
+<section class="search-section py-4 bg-light mb-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <!-- استفاده از همان فرم جستجوی base.html -->
+        <form class="col-12 mb-3" action="{% url 'shop:search' %}">
+          <input name="q" type="search" class="form-control form-control-dark" placeholder="جستجوی محصولات..." aria-label="Search">
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- بخش محتوای اصلی -->
+ 
+<section class="main-content">
+  <div class="container">
+    {% if products %}
+    <div class="row">
+    {% for product in products.object_list %}
+    <div class="col-md-3 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img style="object-fit: cover;" class="card-img-top" height="200" src="{{ product.image.url }}" alt="{{ product.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.title }}</h5>
+          
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <h6 class="m-0 text-success">${{ product.price }}</h6>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده جزئیات</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    <!-- pagination -->
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-auto">
+        <ul class="pagination">
+          {% if products.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">بازگشت</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">{{products.previous_page_number}}</a></li>
+          {% endif %}
+          <li class="page-item active"><a class="page-link" href="?page={{ products.number }}">{{products.number}}</a></li>
+          {% if products.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">{{products.next_page_number}}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">بعدی</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col-md-8 mx-auto mt-5 pt-5 text-center">
+        <br>
+        <h3 class="text-muted text-capitalize">محصولی یافت نشد..!</h3>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- بخش فوتر -->
+<footer class="footer mt-5 py-4 bg-dark text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>درباره ما</h5>
+        <p>فروشگاه آنلاین ما با ارائه محصولات با کیفیت و خدمات عالی در خدمت شماست.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>لینک‌های مفید</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'shop:home_page' %}" class="text-white">صفحه اصلی</a></li>
+          <li><a href="#" class="text-white">محصولات</a></li>
+          <li><a href="#" class="text-white">تماس با ما</a></li>
+          <li><a href="#" class="text-white">قوانین و مقررات</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>تماس با ما</h5>
+        <address>
+          <p><i class="material-icons">place</i> آدرس: تهران، خیابان ولیعصر</p>
+          <p><i class="material-icons">phone</i> تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
+          <p><i class="material-icons">email</i> ایمیل: info@example.com</p>
+        </address>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12 text-center">
+        <p class="mb-0">&copy; ۱۴۰۲ تمامی حقوق محفوظ است.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,72 @@
+/* استایل‌های صفحه ورود */
+.rounded-4 {
+    border-radius: 1rem;
+  }
+  
+  .form-control:focus {
+    border-color: #e0e0e0;
+    box-shadow: none;
+  }
+  
+  .btn-primary {
+    background-color: #ef394e;
+    border-color: #ef394e;
+  }
+  
+  .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #e6324c;
+    border-color: #e6324c;
+  }
+  
+  .invalid-feedback {
+    display: none;
+    color: #ef394e;
+  }
+  
+  a {
+    color: #19bfd3;
+  }
+  
+  a:hover {
+    color: #148f9f;
+  }
+  
+  @media (max-width: 767.98px) {
+    .card {
+      border: none;
+      box-shadow: none !important;
+      background-color: transparent;
+    }
+    
+    body {
+      background-color: #fff;
+    }
+  }
+
+
+
+  /* استایل‌های صفحه تایید کد */
+.verification-code-input {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .verification-code-input:focus {
+    border-color: #ef394e;
+    box-shadow: 0 0 0 0.25rem rgba(239, 57, 78, 0.25);
+  }
+  
+  .verification-code-input.is-invalid {
+    border-color: #ef394e;
+  }
+  
+  #resendLink {
+    color: #19bfd3;
+  }
+  
+  #resendLink:hover {
+    color: #148f9f;
+  }

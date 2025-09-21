@@ -1,0 +1,404 @@
+@font-face {
+    font-family: "Vazir";
+    src: url(../fonts/Vazir.eot);
+    src: url(../fonts/Vazir.woff2) format("woff2");
+    src: url(../fonts/Vazir.woff2) format("woff2");
+    src: url(../fonts/Vazir.ttf) format("truetype");
+}
+
+
+body {
+    font-family: "Vazir" !important;
+}
+
+:root{
+    --pink: #e5345b;
+}
+
+
+/* button */
+.bg-primary{
+    background-color: var(--pink)!important;
+}
+
+.btn:not(.nav-btns button){
+    background-color: #fff;
+    color: rgb(85, 85, 85);
+    padding: 10px 28px;
+    border-radius: 25px;
+    border: 1px solid rgb(85, 85, 85);
+}
+.btn:not(.nav-btns button):hover{
+    background-color: var(--pink);
+    color: #fff;
+    border-color: var(--pink);
+}
+
+/* text color */
+.text-primary{
+    color: var(--pink)!important;
+}
+
+
+
+.nav-link:hover{
+    color: var(--pink)!important;
+}
+
+/* media queries */
+@media(min-width: 992px){
+    .nav-item{
+        border-bottom: none;
+    }
+}
+
+
+/* Digikala-style navbar styles */
+.navbar {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* Header styles */
+.header-top .form-control {
+  border-color: #f0f0f1;
+  background-color: #f0f0f1;
+  font-size: 0.9rem;
+}
+
+.header-top .form-control:focus {
+  box-shadow: none;
+  border-color: #e0e0e1;
+}
+
+.header-top .btn-light {
+  background-color: #f0f0f1;
+  border-color: #f0f0f1;
+}
+
+/* Navbar styles */
+.navbar {
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.navbar-nav .nav-link {
+  color: #5a5c69;
+  font-size: 0.9rem;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ef394e;
+}
+
+/* Mega Menu Styles */
+.mega-menu {
+  border-radius: 0;
+  margin-top: 0;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+.category-item {
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.category-item a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 6px 10px;
+}
+
+.category-item:hover, .category-item.active {
+  background-color: #f5f5f5;
+}
+
+.category-item:hover a, .category-item.active a {
+  color: #ef394e;
+}
+
+.subcategory-content h6 {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.subcategory-content a {
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.subcategory-content a:hover {
+  color: #ef394e !important;
+  padding-right: 5px;
+}
+
+/* Mobile bottom navbar */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0; /* اضافه کردن جهت چپ */
+  right: 0; /* اضافه کردن جهت راست */
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  border-top: 1px solid #eee;
+  padding: 10px 0; /* پدینگ عمودی مناسب */
+}
+
+
+/* Add space at the bottom on mobile */
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+.bottom-nav .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.bottom-nav .navbar-nav {
+  width: 100%;
+  margin: 0;
+}
+
+.dropdown-menu {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border: none;
+  padding: 0.75rem 0;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+.banner-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .banner-section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .carousel-item img {
+    max-height: 200px;
+  }
+}
+
+.carousel-indicators {
+  margin-bottom: 0.5rem;
+}
+
+.carousel-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+
+/* استایل بخش برندها */
+.brands-section {
+  background-color: #f8f9fa;
+}
+
+.section-title {
+  position: relative;
+  color: #333;
+  font-weight: 700;
+}
+
+.section-title:after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: #ef394e;
+  margin: 10px auto 0;
+}
+
+.brand-item {
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.brand-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.brand-item a {
+  text-decoration: none;
+  color: #333;
+}
+
+.brand-name {
+  font-size: 0.9rem;
+  margin-top: 8px;
+  color: #666;
+}
+
+@media (max-width: 576px) {
+  .brand-item {
+    padding: 10px !important;
+  }
+  
+  .brand-name {
+    font-size: 0.8rem;
+  }
+}
+
+.Home_service__drkmn {
+  background: linear-gradient(90deg, #131141 0%, #111d47 100%) !important;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+.Home_serviceTitle__avCV_ .font-25 {
+  font-size: 1.5rem;
+}
+.Home_serviceTitle__avCV_ .font-13 {
+  font-size: 0.95rem;
+}
+.Home_homeBrandRow__hJoKb a {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+.Home_homeBrandRowImage__tKlWy {
+  max-width: 92px;
+  max-height: 62px;
+  margin: 0 auto;
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+}
+.Home_homeBrandRow__hJoKb a:hover .Home_homeBrandRowImage__tKlWy {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.Home_HomeBrandRowH2__Ke2uG {
+  font-size: 1rem;
+  color: #fff;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 991.98px) {
+  .Home_service__drkmn {
+    border-radius: 0;
+    margin-bottom: 1rem;
+  }
+  .Home_serviceTitle__avCV_ .font-25 {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .Home_HomeBrandRowH2__Ke2uG {
+    font-size: 0.85rem;
+  }
+  .Home_serviceTitle__avCV_ .font-25 {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+/*   filter style */
+
+/* =====================
+   فیلتر موبایل و نوبار پایین (سازگار با بوت‌استرپ)
+   ===================== */
+
+/* دکمه فیلتر موبایل فقط در موبایل */
+.filter-mobile-btn {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .filter-mobile-btn {
+    z-index: 1040; /* کمتر از .offcanvas-bottom که 1060 است */
+  }
+  .offcanvas-bottom {
+    z-index: 1060 !important;
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .main-content {
+    margin-bottom: 120px; /* فضای کافی برای دکمه و نوبار پایین */
+  }
+}
+
+@media (min-width: 768px) {
+  .filter-mobile-btn,
+  .offcanvas-bottom,
+  .bottom-nav {
+    display: none !important;
+  }
+  .main-content {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* استایل‌های عمومی فیلتر و فرم */
+.filter-section h6 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.filter-button-container {
+  z-index: 1020;
+}
+
+.form-check-input:checked {
+  background-color: var(--pink);
+  border-color: var(--pink);
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--pink);
+}
+
+.form-range::-moz-range-thumb {
+  background: var(--pink);
+}
+
+.form-range::-ms-thumb {
+  background: var(--pink);
+}
+
+.offcanvas-header {
+  padding: 1rem 1.5rem;
+}
+
+.offcanvas-body {
+  padding-top: 0.5rem;
+}

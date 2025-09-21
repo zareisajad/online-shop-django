@@ -1,41 +1,195 @@
 {% extends 'base.html' %}
 
-{% block content %}
-{% if products %}
-{% for product in products.object_list %}
-<div class="card me-2 mb-2" style="width: 16rem;">
-    <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ product.image.url }}">
-    <div class="mt-3 text-center">
-      <h5 class="card-title">{{ product.title }}</h5>
-      <p class="text-muted">${{ product.price }}</p>
-      <a href="{{ product.get_absolute_url }}" class="mb-3 btn btn-outline-primary w-100">Buy Now</a>
+{% block homepage %}
+<section>
+    <div class="banner-section">
+      <div id="mainBanner" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#mainBanner" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#mainBanner" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#mainBanner" data-bs-slide-to="2"></button>
+        </div>
+        
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <picture>
+              <!-- Mobile image -->
+              <source media="(max-width: 768px)" src="pic/banner1.webp">
+              <!-- Desktop image -->
+              <source media="(min-width: 769px)" src="pic/banner1.webp">
+              <!-- Fallback image -->
+              <img src="pic/banner1.webp" class="d-block w-100" alt="Banner 1">
+            </picture>
+          </div>
+          <div class="carousel-item">
+            <picture>
+              <source media="(max-width: 768px)" srcset="pic/banner1.webp">
+              <source media="(min-width: 769px)" srcset="pic/banner1.webp">
+              <img src="pic/banner1.webp" class="d-block w-100" alt="Banner 2">
+            </picture>
+          </div>
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainBanner" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainBanner" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
-  </div>
-{% endfor %}
-<!-- pagination -->
-<center class="mt-5">
-  <div class="col-md-2">
-    <ul class="pagination">
-      {% if products.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">{{products.previous_page_number}}</a></li>
-      {% endif %}
-      <li class="page-item"><a class="page-link" href="?page={{ products.number }}">{{products.number}}</a></li>
-      {% if products.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">{{products.next_page_number}}</a></li>
-      <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
-      {% endif %}
-    </ul>
-  </div>
-</center>
-{% else %}
-<div class="row">
-  <div class="col-md-2"></div>
-  <div class="col-md-8 mt-5 pt-5 text-center">
-    <br>
-    <h3 class="text-muted text-capitalize">No Products..!</h3>
-  </div>
-  <div class="col-md-2"></div>
-</div>
-{% endif %}
+    </section>
+    
+    
+    <!-- home service-->
+        <section class="Home_service__drkmn py-4" style="background: linear-gradient(90deg, #e60023 0%, #ff5c5c 100%);">
+          <div class="container-fluid">
+            <div class="row gy-3 justify-content-between align-items-center">
+              <div class="col-lg-3 mb-4 align-items-center ">
+                <div class="Home_serviceTitle__avCV_">
+                  <span class="font-25 text-white mb-3 fw-bold d-block">برند ها</span>
+                  <p class="mb-0 text-white font-13">برند خودروی خود را انتخاب کنید</p>
+                </div>
+              </div>
+              <div class="col-lg-9">
+                <div class="row gy-2 gx-2 service-logo justify-content-md-start justify-content-center align-items-center Home_homeBrandContainer__oG_uU Home_brandIcons__1TcOk">
+                  <!-- نمونه برندها -->
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="کیا" href="{% url 'shop:car_brand_articles' brand_slug='kia' %}">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-76-kia.jpg" alt="کیا" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">کیا</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="ایران خودرو" href="{% url 'shop:car_brand_articles' brand_slug='ایران-خودرو' %}">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-106-irankhodro.jpg" alt="ایران خودرو" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">ایران خودرو</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="سانگ یانگ" href="/pages/shop-ssangyong">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-114-ssangyong.jpg" alt="سانگ یانگ" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">سانگ یانگ</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="رنو" href="/pages/shop-renault">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-107-renault.jpg" alt="رنو" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">رنو</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="لیفان" href="/pages/shop-lifan">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-103-lifan.jpg" alt="لیفان" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">لیفان</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="ام وی ام" href="/pages/shop-mvm">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-108-mvm.jpg" alt="ام وی ام" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">ام وی ام</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="جک" href="/pages/shop-jac">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-104-jak.jpg" alt="جک" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">جک</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="جیلی" href="/pages/shop-geely">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-110-geely.jpg" alt="جیلی" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">جیلی</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="چری" href="/pages/shop-chery">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-112-chery.jpg" alt="چری" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">چری</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="سوزوکی" href="/pages/shop-suzuki">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-115-suzuki.jpg" alt="سوزوکی" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">سوزوکی</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="پژو" href="/pages/shop-peugeot">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-109-peugeot.jpg" alt="پژو" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">پژو</h2>
+                    </a>
+                  </div>
+                  <div class="col-md-3 col-sm-3 col-lg-2 col-4 item Home_homeBrandRow__hJoKb">
+                    <a title="برلیانس" href="/pages/shop-brilliance">
+                      <picture class="overflow-hidden d-block">
+                        <img class="img-fluid Home_homeBrandRowImage__tKlWy Home_serviceImage__C_Nst rounded bg-white p-1" src="https://mashinno.com/uploads/menu_items/thumb_125-85_menu_items-128-brilliance.jpg" alt="برلیانس" width="92" height="62">
+                      </picture>
+                      <h2 class="Home_HomeBrandRowH2__Ke2uG mt-2 fs-6 text-white">برلیانس</h2>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+    
+    
+        <!--product sample-->
+        <section class="main-content">
+          <div class="container">
+            {% if products %}
+            <div class="row align-items-center justify-content-center">
+              <div class="col-12 ">
+                <h1>محصولات</h1>
+              </div>
+            </div>
+            <div class="row">
+            {% for product in products.object_list %}
+            <div class="col-md-3 mb-4">
+              <div class="card h-100 shadow-sm">
+                <img style="object-fit: cover;" class="card-img-top" height="200" src="{{product.image.url}}" alt="{{product.title}}">
+                <div class="card-body">
+                  <h5 class="card-title">{{product.title}}</h5>
+                  
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h6 class="m-0 text-success">{{product.price}} تومن</h6>
+                    <a href="{{product.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده جزئیات</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+            {# Add the missing endif tag here #}
+            {% endif %}
+          
+          </div>
+        </div>
+        </section> 
+      
 {% endblock %}

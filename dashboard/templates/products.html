@@ -1,15 +1,15 @@
 {% extends "dashboard.html" %}
-
+{% load jalali_tag %}
 {% block content %}
 
 <table class="table table-striped ">
     <thead class="text-muted">
         <tr>
-            <th scope="col">n</th>
-            <th scope="col">title</th>
-            <th scope="col">price</th>
-            <th scope="col">category</th>
-            <th scope="col">date</th>
+            <th scope="col">شماره</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">قیمت</th>
+            <th scope="col">دسته بندی</th>
+            <th scope="col">تاریخ</th>
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
@@ -21,9 +21,9 @@
         <td><a class="text-decoration-none" href="{{ product.get_absolute_url }}">{{ product.title }}</a></td>
         <td>${{ product.price }}</td>
         <td>{{ product.category }}</td>
-        <td>{{ product.date_created|date:"M d" }}</td>
-        <td><a class="text-danger text-decoration-none" href="{% url 'dashboard:delete_product' product.id %}">Delete</a></td>
-        <td><a class="text-info text-decoration-none" href="{% url 'dashboard:edit_product' product.id %}">Edit</a></td>
+        <td>{{ product.date_created|jalali_date }}</td>
+        <td><a class="text-danger text-decoration-none" href="{% url 'dashboard:delete_product' product.id %}">حذف</a></td>
+        <td><a class="text-info text-decoration-none" href="{% url 'dashboard:edit_product' product.id %}">ویرایش</a></td>
       </tr>
     </tbody>
     {% endfor %}

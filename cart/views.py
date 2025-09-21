@@ -32,3 +32,10 @@ def remove_from_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart:show_cart')
+
+
+def cart_count_processor(request):
+    from cart.utils.cart import Cart
+    cart = Cart(request)
+    return {'cart_count': sum(item['quantity'] for item in cart)}
+

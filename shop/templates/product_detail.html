@@ -1,54 +1,462 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% load category_tags %}
+{% load humanize %}
 {% block content %}
+    <!-- Breadcrumb -->
+    <div class="container mt-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'shop:home_page' %}" class="text-decoration-none">فروشگاه</a></li>
+          {% get_category_ancestors product.category as ancestors %}
+          {% for cat in ancestors %}
+            <li class="breadcrumb-item"><a href="{{ cat.get_absolute_url }}" class="text-decoration-none">{{ cat.title }}</a></li>
+          {% endfor %}
+          <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+        </ol>
+      </nav>
+    </div>
 
-<div class="row mb-3 mt-4">
-    <div class="col-md-1"></div>
-    <!-- product content -->
-    <div class="col-md-5 p-3 border rounded">
-        <!-- category -->
-        <div class="border-bottom mb-2 pb-2">
-            <span class="text-muted ">categories:</span><a class="text-decoration-none text-dark" href="{% url 'shop:filter_by_category' product.category.slug %}"> {{product.category}}</a>
-        </div>
-        <!-- title -->
-        <h2>{{ product.title }}</h2>
-        <!-- price -->
-        <h4 class="mt-4 text-dark">Price: ${{ product.price }}</h4>
-        <!-- description -->
-        <div class="mt-4 pe-3 mb-5">{{ product.description }}</div>
-        <!-- cart btn -->
-        <form method="post" action="{% url 'cart:add_to_cart' product.id %}">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" class="btn btn-primary mt-4" value="Add to cart">
-        </form>
-        <br>
-        {% if favorites == 'remove' %}
-        <a href="{% url 'shop:remove_from_favorites' product.id %}" class="btn btn-outline-danger mt-5 text-capitalize ">{{favorites}} from favorites</a>
-        {% else %}
-        <a href="{% url 'shop:add_to_favorites' product.id %}" class="btn btn-outline-success mt-5 text-capitalize ">add to {{favorites}}</a>
-        {% endif %}
-    </div>
-    <!-- product image -->
-    <div class="col-md-6">
-        <img style="object-fit: cover;" class="rounded" src="{{ product.image.url }}" width="510" height="500">
-    </div>
-</div>
-<!-- related products -->
-<div class="row mt-4 mb-4">
-    <h3>Related Products:</h3><hr>
-    {% for p in related_products %}
-        <!-- dont show the current product in this page -->
-        {% if p != product %}
-            <div class="card me-2 mb-2" style="width: 16rem;">
-                <img style="object-fit: cover;" class="card-img mt-2" width="268" height="200" src="{{ p.image.url }}">
-                <div class="mt-3 text-center">
-                <h5 class="card-title">{{ p.title }}</h5>
-                <p class="text-muted">${{ p.price }}</p>
-                <a href="{{ p.get_absolute_url }}" class="mb-3 btn btn-outline-primary w-100">Buy Now</a>
+    <!-- Product Detail Section -->
+    <div class="container mb-5">
+      <div class="row">
+        <!-- Product Images -->
+        <div class="col-12 col-lg-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+              <!-- Main Image -->
+              <div id="productGallery" class="carousel slide" data-bs-ride="false">
+                <div class="carousel-inner">
+                  {% for img in product.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.alt_text }}">
+                    </div>
+                  {% endfor %}
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productGallery" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">قبلی</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productGallery" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">بعدی</span>
+                </button>
+              </div>
+              
+              <!-- Thumbnails -->
+              <div class="d-flex justify-content-center mt-3 pb-3">
+                {% for img in product.images.all %}
+                  <div class="thumbnail-item mx-1 border rounded p-1 {% if forloop.first %}active{% endif %}" data-bs-target="#productGallery" data-bs-slide-to="{{ forloop.counter0 }}">
+                    <img src="{{ img.image.url }}" class="img-fluid" alt="{{ img.alt_text }}">
+                  </div>
+                {% endfor %}
+              </div>
             </div>
-        {% endif %}
-    {% endfor %}
-</div>
-{% endblock %}
+          </div>
+        </div>
+        
+        <!-- Product Info -->
+        <div class="col-12 col-lg-5 mb-4">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <!-- Product Title -->
+              <h1 class="h5 fw-bold mb-3">{{product.title}}</h1>
+              
+              <!-- Product Brand -->
+              <div class="d-flex align-items-center mb-3">
+                <span class="text-muted">برند:</span>
+                <a href="#" class="text-decoration-none me-2">{{product.brand}}</a>
+              </div>
+              
+              <!-- Product Category -->
+              <div class="d-flex align-items-center mb-3">
+                <span class="text-muted">دسته‌بندی:</span>
+                <a href="#" class="text-decoration-none me-2">{{product.category}}</a>
+              </div>
+              
+              <!-- Product Rating -->
+              <div class="d-flex align-items-center mb-4">
+                <div class="d-flex align-items-center">
+                  <span class="bg-success text-white rounded px-2 py-1 me-2">4.2</span>
+                  <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </div>
+                </div>
+                <span class="text-muted me-2">(۱۲۳ دیدگاه)</span>
+              </div>
+              
+              <!-- Product Features -->
+              <div class="mb-4">
+                <h6 class="fw-bold mb-3">ویژگی‌های محصول</h6>
+                <ul class="list-unstyled">
+                  <li class="d-flex mb-2">
+                    <span class="text-muted">نوع:</span>
+                    <span class="me-2">آنالوگ</span>
+                  </li>
+                  <li class="d-flex mb-2">
+                    <span class="text-muted">مناسب برای خودرو:</span>
+                    <span class="me-2">{{product.compatible_cars.all|join:", "}}</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <!-- Product Colors -->
+              <div class="mb-4">
+                <h6 class="fw-bold mb-3">رنگ: <span class="fw-normal">{{product.color}}</span></h6>
+                <div class="d-flex">
+                  <div class="color-option me-2 border rounded-circle p-1 active">
+                    <span class="d-block rounded-circle bg-dark"></span>
+                  </div>
+                  <div class="color-option me-2 border rounded-circle p-1">
+                    <span class="d-block rounded-circle bg-secondary"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Seller Info -->
+              <div class="mb-4 p-3 bg-light rounded">
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-store text-primary me-2"></i>
+                  <span class="fw-bold">فروشنده:</span>
+                  <span class="me-2">{{product.shop.title}}</span>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                  <i class="fas fa-medal text-warning me-2"></i>
+                  <span>رضایت خرید: ۸۷٪</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-shipping-fast text-success me-2"></i>
+                  <span>ارسال از انبار فروشنده</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product Purchase Box -->
+        <div class="col-12 col-lg-3 mb-4">
+          <div class="card border-0 shadow-sm sticky-lg" style="top: 100px;">
+            <div class="card-body">
+              <!-- Price Section -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <!--- اگر فیچر تخفیف فعال شد، این بخش را فعال کن
+                  {% if product.discount_price %}
+                    <del class="text-muted small">{{ product.price|intcomma }} تومان</del>
+                    <span class="badge bg-danger">تخفیف</span>
+                  {% else %}
+                    <span class="fw-bold fs-5">{{ product.price|intcomma }} تومان</span>
+                  {% endif %}
+                  -->
+                  <span class="fw-bold fs-5">{{ product.price|intcomma }} تومان</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold fs-5">
+                    <!--اگر فیچر تخفیف فعال شد، این بخش را فعال کن
+                    {% if product.discount_price %}
+                      {{ product.discount_price|intcomma }} تومان
+                    {% else %}
+                      {{ product.price|intcomma }} تومان
+                    {% endif %}
+                  -->
+                  </span>
+                </div>
+              </div>
+              
+              <!-- Warranty -->
+              <div class="mb-4">
+                {% if product.has_warranty %}
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-shield-alt text-success me-2"></i>
+                  <span>{{product.warranty}} ماهه</span>
+                  </div>
+                {% else %}
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-times-circle text-danger me-2"></i>
+                    <span>گارانتی ندارد</span>
+                  </div>
+                {% endif %}
+
+              </div>
+              
+              <!-- Stock Status -->
+              <div class="mb-4">
+                {% if product.is_active %}
+                  <div class="d-flex align-items-center text-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span>موجود در انبار</span>
+                  </div>
+                {% else %}
+                  <div class="d-flex align-items-center text-danger">
+                    <i class="fas fa-times-circle me-2"></i>
+                    <span>ناموجود</span>
+                  </div>
+                {% endif %}
+              </div>
+              
+              <!-- Quantity -->
+              
+              <!-- Add to Cart Button -->
+              <div class="d-grid gap-2 mb-3">
+                <button class="btn btn-danger py-2" id="addToCartBtn" data-product-id="{{ product.id }}">
+                  <i class="fas fa-shopping-cart me-2"></i>
+                  افزودن به سبد خرید
+                </button>
+              </div>
+              
+              <!-- Wishlist Button -->
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-secondary py-2">
+                  <i class="far fa-heart me-2"></i>
+                  افزودن به علاقه‌مندی‌ها
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+      <!-- Product Description Tabs -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">توضیحات</button>
+                </li>
+                
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab" aria-controls="specs" aria-selected="false">مشخصات</button>
+                </li>
+                <!--
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">دیدگاه‌ها</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="questions-tab" data-bs-toggle="tab" data-bs-target="#questions" type="button" role="tab" aria-controls="questions" aria-selected="false">پرسش و پاسخ</button>
+                </li>
+              -->
+              </ul>
+              <div class="tab-content p-3" id="productTabsContent">
+                <!-- Description Tab -->
+                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                  <h5 class="fw-bold mb-3">معرفی محصول</h5>
+                  <p>{{product.description}}</p>
+                </div>
+                
+                <!-- Specifications Tab -->
+                <div class="tab-pane fade" id="specs" role="tabpanel" aria-labelledby="specs-tab">
+                  <h5 class="fw-bold mb-3">مشخصات فنی</h5>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tbody>
+                        <tr>
+                          <th scope="row" class="bg-light">برند</th>
+                          <td>{{product.brand}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="bg-light">مناسب برای خودرو</th>
+                          <td>{{product.compatible_cars.all|join:", "}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="bg-light">جنس</th>
+                          <td>پلاستیک</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="bg-light">رنگ</th>
+                          <td>{{product.color}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="bg-light">ابعاد</th>
+                          <td>۲۰×۱۵×۵ سانتی‌متر</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="bg-light">وزن</th>
+                          <td>۲۵۰ گرم</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+<!-- محصولات مشابه -->
+<section class="similar-products py-4 bg-light">
+  <div class="container">
+    <h2 class="section-title mb-4">محصولات مشابه</h2>
+    <div class="row g-3">
+      {% for product in related_products %}
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm border-0">
+            <a href="{{ product.get_absolute_url }}" class="text-decoration-none">
+              {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.title }}">
+              {% else %}
+                <img src="{% static 'img/no-image.png' %}" class="card-img-top" alt="بدون تصویر">
+              {% endif %}
+            </a>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title fs-6 mb-2 text-dark">{{ product.title }}</h5>
+              <div class="mt-auto">
+                <p class="fw-bold mb-0 text-success">{{ product.price|intcomma }} تومان</p>
+                <a href="{{ product.get_absolute_url }}" class="btn btn-sm btn-outline-primary w-100">
+                  مشاهده محصول
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top btn btn-primary rounded-circle" id="backToTop">
+  <i class="fas fa-arrow-up"></i>
+</a>
+  
+         <!-- Toast افزودن به سبد خرید -->
+         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+          <div id="addToCartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+              <i class="bi bi-check-circle me-2"></i>
+              <strong class="me-auto">افزوده شد</strong>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              محصول با موفقیت به سبد خرید اضافه شد.
+              <div class="mt-2">
+                <a href="cart.html" class="btn btn-sm btn-outline-success">مشاهده سبد خرید</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+    <script>
+      $(document).ready(function() {
+        // اسلایدر تصاویر محصول
+        $('.product-thumbnail').on('click', function() {
+          const imgSrc = $(this).attr('data-img');
+          $('#mainProductImage').attr('src', imgSrc);
+          $('.product-thumbnail').removeClass('active');
+          $(this).addClass('active');
+        });
+        
+        // افزایش و کاهش تعداد
+        $('#increaseQuantity').on('click', function() {
+          let quantity = parseInt($('#quantityInput').val());
+          if (quantity < 10) {
+            $('#quantityInput').val(quantity + 1);
+            updateTotalPrice();
+          }
+        });
+        
+        $('#decreaseQuantity').on('click', function() {
+          let quantity = parseInt($('#quantityInput').val());
+          if (quantity > 1) {
+            $('#quantityInput').val(quantity - 1);
+            updateTotalPrice();
+          }
+        });
+        
+        $('#quantityInput').on('change', function() {
+          updateTotalPrice();
+        });
+        
+        // به‌روزرسانی قیمت کل
+        function updateTotalPrice() {
+          const quantity = parseInt($('#quantityInput').val());
+          const price = parseInt($('#productPrice').data('price'));
+          const totalPrice = quantity * price;
+          $('#productPrice').text(numberWithCommas(totalPrice) + ' تومان');
+        }
+        
+        // تبدیل اعداد به فرمت هزارگان
+        function numberWithCommas(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        // تب‌های توضیحات محصول
+        $('.product-tab-link').on('click', function(e) {
+          e.preventDefault();
+          const target = $(this).attr('href');
+          
+          $('.product-tab-link').removeClass('active');
+          $(this).addClass('active');
+          
+          $('.product-tab-content').removeClass('show active');
+          $(target).addClass('show active');
+        });
+        
+        // نمایش بیشتر در توضیحات
+        $('#showMoreDescription').on('click', function(e) {
+          e.preventDefault();
+          $('.product-description-short').addClass('d-none');
+          $('.product-description-full').removeClass('d-none');
+        });
+        
+        // اسلایدر محصولات مشابه
+        const similarProductsSlider = document.querySelector('.similar-products-slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        similarProductsSlider.addEventListener('mousedown', (e) => {
+          isDown = true;
+          startX = e.pageX - similarProductsSlider.offsetLeft;
+          scrollLeft = similarProductsSlider.scrollLeft;
+        });
+
+        similarProductsSlider.addEventListener('mouseleave', () => {
+          isDown = false;
+        });
+
+        similarProductsSlider.addEventListener('mouseup', () => {
+          isDown = false;
+        });
+
+        similarProductsSlider.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - similarProductsSlider.offsetLeft;
+          const walk = (x - startX) * 2;
+          similarProductsSlider.scrollLeft = scrollLeft - walk;
+        });
+        
+        // افزودن به علاقه‌مندی‌ها
+        $('#addToFavoritesBtn').on('click', function() {
+          $(this).toggleClass('text-danger');
+          
+          // اینجا می‌توانید کد مربوط به افزودن محصول به علاقه‌مندی‌ها را قرار دهید
+        });
+        
+        // اشتراک‌گذاری محصول
+        $('#shareProductBtn').on('click', function() {
+          // اینجا می‌توانید کد مربوط به اشتراک‌گذاری محصول را قرار دهید
+          // مثال: نمایش پاپ‌آپ اشتراک‌گذاری
+        });
+        
+        // ارسال نظر
+        $('#reviewForm').on('submit', function(e) {
+          e.preventDefault();
+          
+          // اینجا می‌توانید کد مربوط به ارسال نظر را قرار دهید
+          // مثال: ارسال درخواست AJAX به سرور
+          
+          // پاک کردن فرم
+          $(this).trigger('reset');
+          
+          // نمایش پیام موفقیت
+          alert('نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده خواهد شد.');
+        });
+      });
+    </script>
+    <div class="d-md-none" style="height: 60px;"></div>
+{%endblock%}

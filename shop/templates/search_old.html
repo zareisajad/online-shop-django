@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="main-content">
+      <div class="container">
+        <div class="row align-items-center justify-content-center">
+        </div>
+        <div class="row">
+          <!-- Sidebar Filters (Desktop) -->
+          <div class="col-lg-3 d-none d-lg-block">
+            <div class="card shadow-sm mb-4">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">فیلترها</h5>
+              </div>
+              <div class="card-body">
+                <!-- دسته‌بندی -->
+                <div class="filter-section mb-4">
+                  <h6 class="fw-bold mb-3">دسته‌بندی</h6>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="category1">
+                    <label class="form-check-label" for="category1">کالای دیجیتال</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="category2">
+                    <label class="form-check-label" for="category2">لوازم خانگی</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="category3">
+                    <label class="form-check-label" for="category3">مد و پوشاک</label>
+                  </div>
+                </div>
+
+                <!-- برند -->
+                <div class="filter-section mb-4">
+                  <h6 class="fw-bold mb-3">برند</h6>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="brand1">
+                    <label class="form-check-label" for="brand1">سامسونگ</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="brand2">
+                    <label class="form-check-label" for="brand2">اپل</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="brand3">
+                    <label class="form-check-label" for="brand3">شیائومی</label>
+                  </div>
+                </div>
+
+                <!-- محدوده قیمت -->
+                <div class="filter-section mb-4">
+                  <h6 class="fw-bold mb-3">محدوده قیمت</h6>
+                  <div class="price-range">
+                    <input type="range" class="form-range" min="0" max="100" id="priceRange">
+                    <div class="d-flex justify-content-between">
+                      <span>۰ تومان</span>
+                      <span>۱۰,۰۰۰,۰۰۰ تومان</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- وضعیت موجودی -->
+                <div class="filter-section">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="inStock">
+                    <label class="form-check-label" for="inStock">فقط کالاهای موجود</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-12 col-lg-9">
+          <div class="row">
+              {% for product in products.object_list %}
+            <div class="col-md-4 mb-4">
+              <div class="card h-100 shadow-sm">
+                <img style="object-fit: cover;" class="card-img-top" height="200" src="{{product.image.url}}" alt="{{product.title}}">
+                <div class="card-body">
+                  <h5 class="card-title">{{product.title}}</h5>
+
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <h6 class="m-0 text-success">{{product.price}} تومن</h6>
+                    <a href="{{product.get_absolute_url }}" class="btn btn-sm btn-outline-primary">مشاهده جزئیات</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+            {# Add the missing endif tag here #}
+
+
+          </div>
+        </div>
+    </div>
+    </section>
+
+
+
+    <section>
+      <div class="filter-menu-mobile d-block d-lg-none">
+        <div class="filter-button-container fixed-bottom bg-white shadow-lg py-2 border-top">
+          <div class="container">
+            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
+              <i class="fa fa-filter me-2"></i>فیلترها
+            </button>
+          </div>
+        </div>
+
+        <!-- Offcanvas Filter Menu -->
+        <div class="offcanvas offcanvas-bottom h-75" tabindex="-1" id="filterOffcanvas" aria-labelledby="filterOffcanvasLabel">
+          <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="filterOffcanvasLabel">فیلترها</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="container">
+              <!-- دسته‌بندی -->
+              <div class="filter-section mb-4">
+                <h6 class="fw-bold mb-3">دسته‌بندی</h6>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mCategory1">
+                  <label class="form-check-label" for="mCategory1">کالای دیجیتال</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mCategory2">
+                  <label class="form-check-label" for="mCategory2">لوازم خانگی</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mCategory3">
+                  <label class="form-check-label" for="mCategory3">مد و پوشاک</label>
+                </div>
+              </div>
+
+              <!-- برند -->
+              <div class="filter-section mb-4">
+                <h6 class="fw-bold mb-3">برند</h6>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mBrand1">
+                  <label class="form-check-label" for="mBrand1">سامسونگ</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mBrand2">
+                  <label class="form-check-label" for="mBrand2">اپل</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="mBrand3">
+                  <label class="form-check-label" for="mBrand3">شیائومی</label>
+                </div>
+              </div>
+
+              <!-- محدوده قیمت -->
+              <div class="filter-section mb-4">
+                <h6 class="fw-bold mb-3">محدوده قیمت</h6>
+                <div class="price-range">
+                  <input type="range" class="form-range" min="0" max="100" id="mPriceRange">
+                  <div class="d-flex justify-content-between">
+                    <span>۰ تومان</span>
+                    <span>۱۰,۰۰۰,۰۰۰ تومان</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- وضعیت موجودی -->
+              <div class="filter-section mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="mInStock">
+                  <label class="form-check-label" for="mInStock">فقط کالاهای موجود</label>
+                </div>
+              </div>
+
+              <!-- دکمه‌های اعمال فیلتر -->
+              <div class="d-flex justify-content-between mt-4">
+                <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="offcanvas">انصراف</button>
+                <button class="btn btn-primary" type="button">اعمال فیلترها</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <script>
+      $(document).ready(function() {
+        // Add shadow to header on scroll
+        $(window).scroll(function() {
+          if ($(window).scrollTop() > 10) {
+            $('header').addClass('shadow-sm');
+          } else {
+            $('header').removeClass('shadow-sm');
+          }
+        });
+
+        // Hide all subcategory content initially
+        $('.subcategory-content').hide();
+
+        // Show the first subcategory by default
+        $('#electronics').show();
+        $('.category-item[data-category="electronics"]').addClass('active');
+
+        // Handle category item hover/click
+        $('.category-item').on('mouseenter click', function(e) {
+          const category = $(this).data('category');
+
+          // Remove active class from all items
+          $('.category-item').removeClass('active');
+
+          // Add active class to current item
+          $(this).addClass('active');
+
+          // Hide all subcategory content
+          $('.subcategory-content').hide();
+
+          // Show the corresponding subcategory content
+          $('#' + category).show();
+
+          if (e.type === 'click') {
+            e.preventDefault();
+          }
+        });
+
+        // Keep dropdown open on hover
+        $('.dropdown').on('mouseenter', function() {
+          $(this).find('.dropdown-menu').addClass('show');
+        }).on('mouseleave', function() {
+          $(this).find('.dropdown-menu').removeClass('show');
+        });
+      });
+
+
+      // filter
+
+            // ... existing code ...
+
+      // Keep dropdown open on hover
+      $('.dropdown').on('mouseenter', function() {
+        $(this).find('.dropdown-menu').addClass('show');
+      }).on('mouseleave', function() {
+        $(this).find('.dropdown-menu').removeClass('show');
+      });
+
+      // اسکریپت‌های مربوط به فیلترها
+      // همگام‌سازی فیلترهای دسکتاپ و موبایل
+      $('#category1, #mCategory1').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#category1, #mCategory1').prop('checked', isChecked);
+      });
+
+      $('#category2, #mCategory2').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#category2, #mCategory2').prop('checked', isChecked);
+      });
+
+      $('#category3, #mCategory3').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#category3, #mCategory3').prop('checked', isChecked);
+      });
+
+      $('#brand1, #mBrand1').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#brand1, #mBrand1').prop('checked', isChecked);
+      });
+
+      $('#brand2, #mBrand2').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#brand2, #mBrand2').prop('checked', isChecked);
+      });
+
+      $('#brand3, #mBrand3').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#brand3, #mBrand3').prop('checked', isChecked);
+      });
+
+      $('#inStock, #mInStock').on('change', function() {
+        const isChecked = $(this).prop('checked');
+        $('#inStock, #mInStock').prop('checked', isChecked);
+      });
+
+      // همگام‌سازی اسلایدر قیمت
+      $('#priceRange, #mPriceRange').on('input', function() {
+        const value = $(this).val();
+        $('#priceRange, #mPriceRange').val(value);
+      });
+
+    </script>
+
+{% endblock %}

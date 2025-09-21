@@ -1,0 +1,3 @@
+@user_passes_test(is_manager)
+@login_required
+def shop_detail(request):

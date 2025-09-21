@@ -10,3 +10,4 @@ def return_cart(request):
 def return_categories(request):
     categories = Category.objects.all()
     return {'categories': categories}
+

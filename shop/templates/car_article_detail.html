@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'shop:home_page' %}">خانه</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'shop:car_brand_articles' brand_slug=article.car_brand.slug %}">{{ article.car_brand.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ article.title }}</li>
+        </ol>
+    </nav>
+
+    <!-- Article Header -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <h1 class="h2 mb-3">{{ article.title }}</h1>
+            <div class="d-flex align-items-center text-muted mb-3">
+                <i class="bi bi-calendar3 me-2"></i>
+                <span>{{ article.created_at|date:"j F Y" }}</span>
+                <span class="mx-2">•</span>
+                <i class="bi bi-tag me-2"></i>
+                <span>{{ article.car_brand.name }}</span>
+            </div>
+        </div>
+        <div class="col-lg-4 text-end">
+            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded shadow-sm" style="max-height: 200px;">
+        </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="article-content">
+                        {{ article.content|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>اطلاعات مقاله</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <strong>برند:</strong> {{ article.car_brand.name }}
+                        </li>
+                        <li class="mb-2">
+                            <strong>تاریخ انتشار:</strong> {{ article.created_at|date:"j F Y" }}
+                        </li>
+                        <li class="mb-2">
+                            <strong>آخرین بروزرسانی:</strong> {{ article.updated_at|date:"j F Y" }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="mb-4">
+                <i class="bi bi-gear me-2"></i>
+                قطعات مرتبط با {{ article.car_brand.name }}
+            </h3>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for product in related_products %}
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card h-100 shadow-sm product-card">
+                <div class="position-relative">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}" style="height: 200px; object-fit: cover;">
+                    {% if product.discount_price %}
+                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">تخفیف</span>
+                    {% endif %}
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">{{ product.title }}</h6>
+                    <p class="card-text text-muted small">{{ product.description|truncatewords:10 }}</p>
+                    
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            {% if product.discount_price %}
+                            <span class="text-decoration-line-through text-muted">{{ product.price }} تومان</span>
+                            <span class="text-success fw-bold">{{ product.discount_price }} تومان</span>
+                            {% else %}
+                            <span class="text-success fw-bold">{{ product.price }} تومان</span>
+                            {% endif %}
+                        </div>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-sm w-100">
+                            مشاهده جزئیات
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.article-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+}
+
+.product-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+</style>
+{% endblock %}

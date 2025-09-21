@@ -1,0 +1,243 @@
+{# search.html #}
+{% extends 'base.html' %}
+{% block content %}
+<section class="main-content">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar Filters (فقط دسکتاپ) -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <form id="filter-form">
+          <div class="card mb-4">
+            <div class="card-header">مدل ماشین</div>
+            <div class="card-body">
+              {% for car_model in car_models %}
+                <div class="form-check mb-2">
+                  <input name="car_model" value="{{ car_model.id }}"
+                         class="form-check-input" type="checkbox"
+                         id="car-model-{{ forloop.counter }}"
+                         {% if car_model.id|stringformat:"s" in selected_car_models %}checked{% endif %}>
+                  <label class="form-check-label" for="car-model-{{ forloop.counter }}">
+                    {{ car_model.brand.name }} {{ car_model.name }}
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- برند -->
+<div class="card mb-4">
+  <div class="card-header">برند</div>
+  <div class="card-body">
+    {% for brand in brands %}
+      <div class="form-check mb-2">
+        <input name="brand" value="{{ brand }}"
+               class="form-check-input" type="checkbox"
+               id="brand-{{ forloop.counter }}"
+               {% if brand in selected_brands %}checked{% endif %}>
+        <label class="form-check-label" for="brand-{{ forloop.counter }}">
+          {{ brand }}
+        </label>
+      </div>
+    {% empty %}
+      <p>برندی یافت نشد.</p>
+    {% endfor %}
+  </div>
+</div>
+          <!-- محدوده قیمت -->
+          <div class="card mb-4">
+            <div class="card-header">قیمت</div>
+            <div class="card-body">
+              <input name="price_min" type="number" class="form-control mb-2"
+                     placeholder="حداقل" value="{{ price_min }}">
+              <input name="price_max" type="number" class="form-control"
+                     placeholder="حداکثر" value="{{ price_max }}">
+            </div>
+          </div>
+
+          <!-- موجودی -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="form-check">
+                <input name="in_stock"
+                      class="form-check-input"
+                      type="checkbox"
+                      id="inStock"
+                     {% if in_stock == 'on' %}checked{% endif %}>
+                <label class="form-check-label" for="inStock">
+                  فقط کالاهای موجود
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button id="apply-filters" type="button" class="btn btn-primary w-100">
+            اعمال فیلترها
+          </button>
+        </form>
+      </div>
+
+      <!-- نتایج -->
+      <div class="col-lg-9">
+        <div id="products-container">
+          {% include 'partials/_products_list.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- دکمه فیلتر موبایل (فقط موبایل) -->
+<div class="d-block d-md-none filter-mobile-btn" style="position: fixed; bottom: 75px; left: 0; right: 0;">
+  <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFilters" aria-controls="mobileFilters">
+    فیلترها <i class="bi bi-funnel"></i>
+  </button>
+</div>
+
+<!-- Offcanvas فیلتر موبایل (فقط موبایل) -->
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="mobileFilters" aria-labelledby="mobileFiltersLabel" style="height: 70vh;">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileFiltersLabel">فیلترها</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="بستن"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form id="mobile-filter-form">
+      <!-- اینجا همان فیلترهای فرم دسکتاپ را قرار دهید (دسته‌بندی، برند، قیمت، ...)، فقط nameها باید با فرم اصلی یکی باشد -->
+      <!-- مثال: -->
+      <!-- مدل ماشین -->
+      <div class="mb-3">
+        <label class="form-label">مدل ماشین</label>
+        {% for car_model in car_models %}
+          <div class="form-check">
+            <input name="car_model" value="{{ car_model.id }}"
+                   class="form-check-input" type="checkbox"
+                   id="m-car-model-{{ forloop.counter }}"
+                   {% if car_model.id|stringformat:"s" in selected_car_models %}checked{% endif %}>
+            <label class="form-check-label" for="m-car-model-{{ forloop.counter }}">
+              {{ car_model.brand.name }} {{ car_model.name }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- برند -->
+      <div class="mb-3">
+        <label class="form-label">برند</label>
+        {% for brand in brands %}
+          <div class="form-check">
+            <input name="brand" value="{{ brand }}"
+                   class="form-check-input" type="checkbox"
+                   id="m-brand-{{ forloop.counter }}"
+                   {% if brand in selected_brands %}checked{% endif %}>
+            <label class="form-check-label" for="m-brand-{{ forloop.counter }}">
+              {{ brand }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- قیمت -->
+      <div class="mb-3">
+        <label class="form-label">قیمت</label>
+        <input name="price_min" type="number" class="form-control mb-2"
+               placeholder="حداقل" value="{{ price_min }}">
+        <input name="price_max" type="number" class="form-control"
+               placeholder="حداکثر" value="{{ price_max }}">
+      </div>
+      <!-- موجودی -->
+      <div class="mb-3">
+        <div class="form-check">
+          <input name="in_stock"
+                class="form-check-input"
+                type="checkbox"
+                id="mInStock"
+                {% if in_stock == 'on' %}checked{% endif %}>
+          <label class="form-check-label" for="mInStock">
+            فقط کالاهای موجود
+          </label>
+        </div>
+      </div>
+      <button id="apply-mobile-filters" type="button" class="btn btn-primary w-100">
+        اعمال فیلترها
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+$(function(){
+  function fetchResults(params) {
+    $.ajax({
+      url: "{% url 'shop:search' %}",
+      data: params,
+      dataType: 'json',
+      success: function(data) {
+        $('#products-container').html(data.html);
+        // scroll to top of results
+        $('html, body').animate({
+          scrollTop: $('#products-container').offset().top - 80
+        }, 300);
+      }
+    });
+  }
+
+  // اعمال فیلتر
+  $('#apply-filters').on('click', function(){
+    const params = $('#filter-form').serializeArray()
+      .reduce((o, x) => {
+        if (o[x.name] !== undefined) {
+          // اگر چند مقدار با یک name باشد
+          if (!Array.isArray(o[x.name])) o[x.name] = [o[x.name]];
+          o[x.name].push(x.value);
+        } else {
+          o[x.name] = x.value;
+        }
+        return o;
+      }, {});
+    fetchResults(params);
+  });
+
+  // شماره صفحه
+  $('#products-container').on('click', '.page-link', function(e){
+    e.preventDefault();
+    const page = $(this).data('page');
+    if(!page) return;
+    let params = $('#filter-form').serializeArray();
+    params.push({name:'page', value: page});
+    fetchResults(
+      params.reduce((o, x) => {
+        if (o[x.name] !== undefined) {
+          if (!Array.isArray(o[x.name])) o[x.name] = [o[x.name]];
+          o[x.name].push(x.value);
+        } else {
+          o[x.name] = x.value;
+        }
+        return o;
+      }, {})
+    );
+  });
+
+  // فیلتر موبایل
+  $('#apply-mobile-filters').on('click', function(){
+    const params = $('#mobile-filter-form').serializeArray()
+      .reduce((o, x) => {
+        if (o[x.name] !== undefined) {
+          if (!Array.isArray(o[x.name])) o[x.name] = [o[x.name]];
+          o[x.name].push(x.value);
+        } else {
+          o[x.name] = x.value;
+        }
+        return o;
+      }, {});
+    fetchResults(params);
+    // بستن offcanvas بعد از اعمال فیلتر
+    var offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById('mobileFilters'));
+    offcanvas.hide();
+  });
+
+  // مدیریت Offcanvas با jQuery
+  $('#mobileFilters').on('show.bs.offcanvas', function () {
+    $('.filter-mobile-btn').hide();
+  });
+  $('#mobileFilters').on('hidden.bs.offcanvas', function () {
+    $('.filter-mobile-btn').show();
+  });
+});
+</script>
+{% endblock %}

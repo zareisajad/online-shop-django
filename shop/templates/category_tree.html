@@ -1,0 +1,10 @@
+<ul class="category-tree">
+    {% for category in categories   %}
+        <li>
+            <a href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+            {% if category.sub_categories.all %}
+            {% include "category_tree.html" with categories=category.sub_categories.all %}
+          {% endif %}
+        </li>
+    {% endfor %}
+</ul>

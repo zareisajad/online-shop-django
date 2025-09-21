@@ -1,12 +1,126 @@
 {% extends "dashboard.html" %}
-{% block content %}
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-group">
-        <button class="btn btn-primary mt-3 w-100" type="submit">Submit</button>
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">ویرایش محصول</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h4 class="mb-3">اطلاعات اصلی</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.title.label }}</label>
+                                {{ form.title }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.category.label }}</label>
+                                {{ form.category }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.price.label }}</label>
+                                {{ form.price }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">تاریخ اعتبار قیمت (جلالی)</label>
+                                <input type="text" id="jalali_date" class="form-control" autocomplete="off">
+                                <input type="hidden" name="price_valid_until" id="gregorian_date" value="{{ form.price_valid_until.value|default_if_none:'' }}">
+                                <small class="text-muted">تاریخ را به صورت شمسی انتخاب کنید.</small>  
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">{{ form.description.label }}</label>
+                                {{ form.description }}
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">{{ form.image.label }}</label>
+                                {{ form.image }}
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-3">جزئیات محصول</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.brand.label }}</label>
+                                {{ form.brand }}
+                                <small class="text-muted">برند محصول</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.manufacturer.label }}</label>
+                                {{ form.manufacturer }}
+                                <small class="text-muted">شرکتی که محصول را تولید کرده است</small>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-3">سازگاری</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">{{ form.compatible_cars.label }}</label>
+                                {{ form.compatible_cars }}
+                                <small class="text-muted">با کلیدهای Ctrl/Cmd برای انتخاب چندین ماشین استفاده کنید</small>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mb-3">اطلاعات اعتماد</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    {{ form.has_warranty }}
+                                    <label class="form-check-label" for="{{ form.has_warranty.id_for_label }}">
+                                        اعتماد دارد؟
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.warranty_months.label }}</label>
+                                {{ form.warranty_months }}
+                                <small class="text-muted">تعداد ماه های اعتماد</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-primary mt-3 w-100" type="submit">به روز رسانی محصول</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</form>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $("#jalali_date").persianDatepicker({
+            format: 'YYYY/MM/DD',
+            autoClose: true,
+            onSelect: function(unix) {
+                // تبدیل به میلادی
+                var pd = new persianDate(unix).toGregorian();
+                var gDate = pd.year + '-' + 
+                            ('0' + pd.month).slice(-2) + '-' + 
+                            ('0' + pd.day).slice(-2);
+                $("#gregorian_date").val(gDate);
+            }
+        });
+
+        // اگر فرم ویرایش است و مقدار میلادی داری، مقدار جلالی را هم ست کن
+        {% if form.price_valid_until.value %}
+            var gDate = "{{ form.price_valid_until.value|date:'Y-m-d' }}";
+            var pDate = new persianDate(new Date(gDate)).format('YYYY/MM/DD');
+            $("#jalali_date").val(pDate);
+            $("#gregorian_date").val(gDate);
+        {% endif %}
+    });
+
+
+
+
+
+</script>
 
 {% endblock %}
